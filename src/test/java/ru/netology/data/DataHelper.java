@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import lombok.Value;
 
 import java.util.Locale;
+import java.util.Random;
 
 public class DataHelper {
     private DataHelper() {
@@ -16,11 +17,11 @@ public class DataHelper {
         Faker faker = new Faker(new Locale(local));
         return faker.internet().password();
     }
-
-    @Value
-    public static class AuthInfo {
-        private String login;
-        private String password;
+    public static int generateValidAmount(int balance){
+        return new Random().nextInt(Math.abs(balance)) + 1; // генерирует рандомное число баланса карты
+    }
+    public static int generateInvalidAmount(int balance){
+        return Math.abs(balance) + new Random().nextInt(10000) + 1;
     }
 
     public static AuthInfo getAuthInfo() {
@@ -30,7 +31,23 @@ public class DataHelper {
         return new AuthInfo(getGenerateLogin("en"), getGeneratePassword("en"));
 
     }
+    public static CardInfo getFirstCardInfo(){
+        return new CardInfo("5559 0000 0000 0001", "92df3f1c-a033-48e6-8390-206f6b1f56c0");
+    }
+    public static CardInfo getSecondCardInfo(){
+        return new CardInfo("5559 0000 0000 0002", "0f3f5c2a-249e-4c3d-8287-09f7a039391d");
+    }
 
+    @Value
+    public static class CardInfo{
+        private String numberCard;
+        private String testId;
+    }
+    @Value
+    public static class AuthInfo {
+        private String login;
+        private String password;
+    }
 
     @Value
     public static class VerificatinCode {
