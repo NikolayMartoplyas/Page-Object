@@ -61,18 +61,14 @@ public class MoneyTransferTest {
         open("http:localhost:9999");
         var loginPage = new LoginPage();
         loginPage.invalidLogin(DataHelper.getAuthInfo());
-        $("[data-test-id='error-notification'] .notification__content")
-                .shouldHave(Condition.exactText("Ошибка! Неверно указан логин или пароль"))
-                .shouldBe(visible, Duration.ofSeconds(15));
+        loginPage.errorMessage("Ошибка! Неверно указан логин или пароль");
     }
     @Test
     void invalidPassword(){
         open("http:localhost:9999");
         var loginPage = new LoginPage();
         loginPage.invalidPassword(DataHelper.getAuthInfo());
-        $("[data-test-id='error-notification'] .notification__content")
-                .shouldHave(Condition.exactText("Ошибка! Неверно указан логин или пароль"))
-                .shouldBe(visible, Duration.ofSeconds(15));
+        loginPage.errorMessage("Ошибка! Неверно указан логин или пароль");
     }
 
 }
