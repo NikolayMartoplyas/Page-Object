@@ -10,10 +10,11 @@ public class VerificationPage {
     private final SelenideElement codeField = $("[data-test-id='code'] input");
     private final SelenideElement actionVerify = $("[data-test-id='action-verify']");
 
-    public VerificationPage(){
+    public VerificationPage() {
         codeField.shouldBe(visible);
     }
-    public DashboardPage validVerify(DataHelper.VerificatinCode verificatinCode){
+
+    public DashboardPage validVerify(DataHelper.VerificatinCode verificatinCode) {
         codeField.setValue(verificatinCode.getCode());
         actionVerify.click();
         return new DashboardPage();

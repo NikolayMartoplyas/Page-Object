@@ -20,33 +20,29 @@ public class DashboardPage {
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
 
-    public DashboardPage(){
+    public DashboardPage() {
         header.shouldBe(visible);
     }
 
-    public int getCardBalance(int cardIndex){
+    public int getCardBalance(int cardIndex) {
         return extractBalance(cards.get(cardIndex).text());
     }
-    private int extractBalance(String text){
+
+    private int extractBalance(String text) {
         val start = text.indexOf(balanceStart);
         val finish = text.indexOf(balanceFinish);
         val value = text.substring(start + balanceStart.length(), finish);
         return Integer.parseInt(value);
     }
-    public void reloadDashboardPage(){
+
+    public void reloadDashboardPage() {
         reloadButton.click();
         header.shouldBe(visible, Duration.ofSeconds(15));
     }
-    public TrabsferPage selectCardToTransfer(DataHelper.CardInfo cardInfo){
+
+    public TrabsferPage selectCardToTransfer(DataHelper.CardInfo cardInfo) {
         cards.findBy(Condition.attribute("data-test-id", cardInfo.getTestId())).$("button").click();
         return new TrabsferPage();
     }
-//    public void transferToCard(int fromCardIndex, int toCardIndex,String sum){
-//        replenish.get(toCardIndex).click();
-//        $("[data-test-id='amount'] input").sendKeys(Keys.CONTROL + "a", Keys.DELETE);
-//        $("[data-test-id='amount'] input").setValue(sum);
-//        $("[data-test-id='from'] input").sendKeys(Keys.CONTROL + "a", Keys.DELETE);
-//        $("[data-test-id='from'] input").setValue(cards.get(fromCardIndex).getText());
-//        $("[data-test-id='action-transfer']").click();
-//    }
+
 }

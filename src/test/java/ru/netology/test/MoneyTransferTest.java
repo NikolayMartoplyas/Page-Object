@@ -36,38 +36,42 @@ public class MoneyTransferTest {
         BalnceFirstCard = dashboardPage.getCardBalance(0);
         BalanceSecondCard = dashboardPage.getCardBalance(1);
     }
+
     @Test
-    void efficientTransferBetweenCards(){
-    var amount = DataHelper.generateValidAmount(BalnceFirstCard);
-    var expectedBalanceFirstCard = BalnceFirstCard - amount;
-    var expectedBalanceSecondCard = BalanceSecondCard + amount;
-    var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
-    dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), firstCardInfo);
-    dashboardPage.reloadDashboardPage();
-    var actualBalanceFirstCard = dashboardPage.getCardBalance(0);
-    var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
-    assertAll(() -> assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard),
-            () -> assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard));
+    void efficientTransferBetweenCards() {
+        var amount = DataHelper.generateValidAmount(BalnceFirstCard);
+        var expectedBalanceFirstCard = BalnceFirstCard - amount;
+        var expectedBalanceSecondCard = BalanceSecondCard + amount;
+        var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
+        dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), firstCardInfo);
+        dashboardPage.reloadDashboardPage();
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(0);
+        var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
+        assertAll(() -> assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard),
+                () -> assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard));
     }
+
     @Test
-    void invalidTransferBetweenCards(){
+    void invalidTransferBetweenCards() {
         var amount = DataHelper.generateInvalidAmount(BalanceSecondCard);
         var transferPage = dashboardPage.selectCardToTransfer(firstCardInfo);
         transferPage.makeTransfer(String.valueOf(amount), secondCardInfo);
         transferPage.error("Ошибка");
     }
+
     @Test
-    void invalidLogin(){
+    void invalidLogin() {
         open("http:localhost:9999");
         var loginPage = new LoginPage();
-        loginPage.invalidLogin(DataHelper.getAuthInfo());
+        loginPage.invalidUser(DataHelper.getRandomLogin());
         loginPage.errorMessage("Ошибка! Неверно указан логин или пароль");
     }
+
     @Test
-    void invalidPassword(){
+    void invalidPassword() {
         open("http:localhost:9999");
         var loginPage = new LoginPage();
-        loginPage.invalidPassword(DataHelper.getAuthInfo());
+        loginPage.invalidUser(DataHelper.getRandomPassword());
         loginPage.errorMessage("Ошибка! Неверно указан логин или пароль");
     }
 

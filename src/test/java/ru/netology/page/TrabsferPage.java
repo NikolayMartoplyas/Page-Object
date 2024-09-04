@@ -18,19 +18,22 @@ public class TrabsferPage {
     private final SelenideElement errorMessage = $("[data-test-id='error-notification']");
 
 
-    public TrabsferPage(){
+    public TrabsferPage() {
         transferHead.shouldBe(visible);
     }
-    public void makeTransfer(String sum, DataHelper.CardInfo cardInfo){
+
+    public void makeTransfer(String sum, DataHelper.CardInfo cardInfo) {
         amountInput.setValue(sum);
         fromInput.setValue(cardInfo.getNumberCard());
         transferButton.click();
     }
-    public DashboardPage makeValidTransfer(String sum, DataHelper.CardInfo cardInfo){
+
+    public DashboardPage makeValidTransfer(String sum, DataHelper.CardInfo cardInfo) {
         makeTransfer(sum, cardInfo);
         return new DashboardPage();
     }
-    public void error(String expectedText){
+
+    public void error(String expectedText) {
         errorMessage.shouldHave(Condition.exactText(expectedText), Duration.ofSeconds(15)).shouldBe(visible);
     }
 }
